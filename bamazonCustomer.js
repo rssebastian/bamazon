@@ -10,7 +10,6 @@ var connection = mysql.createConnection({
 });
 
 connection.connect(function(err) {
-	console.log("Connected as id: " + connection.threadID);
 	productDisplay();
 });
 
@@ -35,10 +34,8 @@ var productDisplay = function() {
 			connection.query("SELECT * FROM products WHERE item_id =" + desiredID, function(err,results) {
 				if (err) throw err;
 				var stockAmt = results[0].stock_quantity;
-				console.log(stockAmt);
 				if (stockAmt >= desiredAmt) {
 					var newStock = stockAmt-desiredAmt;
-					console.log(newStock);
 					connection.query("UPDATE products SET stock_quantity = " + newStock + " WHERE item_id = " + desiredID , function(err, result) {
 						if (err) throw err;
 						console.log("Item bought! Thank you for your purchase!");
